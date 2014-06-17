@@ -8,7 +8,7 @@
         - curl
         - git
         - imagemagick
-        - libmagicwand-dev
+        - libmagickwand-dev
         - mysql-server
         - libmysqlclient-dev
         - openssl
