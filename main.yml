@@ -25,3 +25,34 @@
 
     - name: get redmine source
       git: repo=https://github.com/redmine/redmine dest=/opt/redmine
+
+    - name: ensure directories
+      file: path={{item}} owner="www-data" group="www-data" mode=0755 state=directory recurse=yes
+      with_items:
+        - /opt/redmine/tmp/pdf
+        - /opt/redmine/public/plugin_assets
+        - /opt/redmine/files
+        - /opt/redmine/log
+        - /opt/redmine/repos/git
+
+    - name: ensure mysql is up
+      service: name=mysql state=started
+
+    - name: update mysql root password
+      mysql_user: name=root password={{ ROOT_DB_PASS }}
+
+    - name: ensure mysql db
+      mysql_db: name=redmine state=present
+
+    - name: "ensure mysql user: redmine"
+      mysql_user: name=redmine
+        password={{REDMINE_DB_PASS}}
+        priv="redmine.*:ALL" host=localhost state=present
+
+    - name: config redmine
+      template: src=templates/database.yml dest=/opt/redmine/config/database.yml
+
+    - name: install bundler gem
+      gem: name=bundler state=present
+
+#    - name: install other dependencies
