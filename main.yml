@@ -1,11 +1,11 @@
 ---
 - hosts: redmine
-  sudo: yes
   vars_files:
     - vars/password.yml
   tasks:
     - name: install packages
       apt: name={{item}} state=latest update_cache=yes
+      sudo: yes
       with_items:
         - curl
         - git
@@ -26,7 +26,7 @@
       shell: curl -sSL https://get.rvm.io | bash -s stable --ruby=2.0.0
 
     - name: get redmine source
-      git: repo=https://github.com/redmine/redmine dest=/opt/redmine
+      git: repo=https://github.com/redmine/redmine dest=/opt/redmine force=no
 
     - name: ensure directories
       file: path={{item}} owner="www-data" group="www-data" mode=0755 state=directory recurse=yes
@@ -39,6 +39,7 @@
 
     - name: ensure mysql is up
       service: name=mysql state=started
+      sudo: yes
 
     - name: update mysql root password
       mysql_user: name=root password={{ ROOT_DB_PASS }}
@@ -62,3 +63,15 @@
 
     - name: install other dependencies
       script: script/initDB.sh
+
+    - name: enable apache2 modules
+      apache2_module: name={{item}} state=present
+      with_items:
+        - ssl
+        - perl
+        - dav
+        - dav_fs
+        - rewrite
+
+    - name: install passenger
+      gem: name=passenger state=present
