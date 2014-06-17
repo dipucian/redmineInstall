@@ -27,7 +27,7 @@
 
     - name: create dir
       sudo: yes
-      file: path=/opt/redmine state=directory owner={{USER}} group={{USER}}
+      file: path=/opt/redmine state=directory owner={{ansible_user_id}} group={{ansible_user_id}}
 
     - name: get redmine source
       git: repo=https://github.com/redmine/redmine dest=/opt/redmine force=no
