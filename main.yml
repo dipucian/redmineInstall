@@ -1,0 +1,27 @@
+---
+- hosts: redmine
+  sudo: yes
+  tasks:
+    - name: install packages
+      apt: name=$item state=latest update_cache=yes
+      with_items:
+        - curl
+        - git
+        - imagemagick
+        - libmagicwand-dev
+        - mysql-server
+        - libmysqlclient-dev
+        - openssl
+        - apache2
+        - apache2-dev
+        - libcurl4-gnutls-dev
+        - libapache-dbi-perl
+        - libapache2-mod-perl2
+        - libdbd-mysql-perl
+        - libauthen-simple-ldap-perl
+
+    - name: install ruby 2.0
+      shell: curl -sSL https://get.rvm.io | bash -s stable --ruby=2.0.0
+
+    - name: get redmine source
+      git: repo=https://github.com/redmine/redmine dest=/opt/redmine
