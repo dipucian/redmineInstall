@@ -1,6 +1,8 @@
 ---
 - hosts: redmine
   sudo: yes
+  vars_file:
+    - vars/password.yml
   tasks:
     - name: install packages
       apt: name={{item}} state=latest update_cache=yes
@@ -54,4 +56,5 @@
     - name: install bundler gem
       gem: name=bundler state=present
 
-#    - name: install other dependencies
+    - name: install other dependencies
+      script: script/initDB.sh
