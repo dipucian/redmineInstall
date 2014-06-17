@@ -43,6 +43,9 @@
     - name: update mysql root password
       mysql_user: name=root password={{ ROOT_DB_PASS }}
 
+    - name: put db password in .my.cnf
+      template: src=templates/.my.cnf dest=~/.my.cnf
+
     - name: ensure mysql db
       mysql_db: name=redmine state=present
 
