@@ -13,7 +13,6 @@
         - libmysqlclient-dev
         - openssl
         - apache2
-        - apache2-dev
         - libcurl4-gnutls-dev
         - libapache-dbi-perl
         - libapache2-mod-perl2
