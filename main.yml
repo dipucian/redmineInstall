@@ -20,6 +20,7 @@
         - libapache2-mod-perl2
         - libdbd-mysql-perl
         - libauthen-simple-ldap-perl
+        - python-mysqldb
 
     - name: install ruby 2.0
       shell: curl -sSL https://get.rvm.io | bash -s stable --ruby=2.0.0
