@@ -65,7 +65,8 @@
       script: script/initDB.sh
 
     - name: enable apache2 modules
-      apache2_module: name={{item}} state=present
+      sudo: yes
+      command: a2enmod {{item}}
       with_items:
         - ssl
         - perl
