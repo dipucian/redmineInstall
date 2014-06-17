@@ -60,5 +60,5 @@
     - name: install bundler gem
       gem: name=bundler state=present
 
-#    - name: install other dependencies
-#      script: script/initDB.sh
+    - name: install other dependencies
+      script: script/initDB.sh
