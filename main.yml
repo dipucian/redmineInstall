@@ -23,24 +23,24 @@
         - python-mysqldb
 
     - name: install ruby 2.0
-      shell: curl -sSL https://get.rvm.io | bash -s stable --ruby=2.0.0
+      script: script/installRuby.sh
 
     - name: create dir
       sudo: yes
       file: path=/opt/redmine state=directory owner={{ansible_user_id}} group={{ansible_user_id}}
 
     - name: get redmine source
-      git: repo=https://github.com/redmine/redmine dest=/opt/redmine force=no
+      git: repo=https://github.com/redmine/redmine dest=/opt/redmine
 
-    - name: ensure directories
-      sudo: yes
-      file: path={{item}} owner="www-data" group="www-data" mode=0755 state=directory recurse=yes
-      with_items:
-        - /opt/redmine/tmp/pdf
-        - /opt/redmine/public/plugin_assets
-        - /opt/redmine/files
-        - /opt/redmine/log
-        - /opt/redmine/repos/git
+#    - name: ensure directories
+#      sudo: yes
+#      file: path={{item}} owner="www-data" group="www-data" mode=0755 state=directory recurse=yes
+#      with_items:
+#        - /opt/redmine/tmp/pdf
+#        - /opt/redmine/public/plugin_assets
+#        - /opt/redmine/files
+#        - /opt/redmine/log
+#        - /opt/redmine/repos/git
 
     - name: ensure mysql is up
       service: name=mysql state=started
