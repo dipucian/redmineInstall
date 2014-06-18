@@ -64,7 +64,7 @@
       template: src=templates/database.yml dest=/opt/redmine/config/database.yml
 
     - name: install bundler gem
-      gem: name=bundler state=present
+      command: gem install bundler
 
     - name: install other dependencies
       script: script/initDB.sh
@@ -80,6 +80,6 @@
         - rewrite
 
     - name: install passenger
-      gem: name=passenger state=present
+      command: gem install passenger
     - command: passenger-install-apache2-module
 
